@@ -9,17 +9,20 @@ class Timer {
     constructor({ onTick, endTime }) {
         this.endTime = endTime;
         this.onTick = onTick;
+
+        this.init();
+    }
+
+    init() {
+        const currentTime = Date.now();
+        const time = this.endTime.getTime() - currentTime;
+        const timeComponents = getTimeComponents(time);
+        this.onTick(timeComponents);
     }
 
     start() {
         setInterval(() => {
-            const currentTime = Date.now();
-
-            const time = this.endTime.getTime() - currentTime;
-
-            const timeComponents = getTimeComponents(time);
-
-            this.onTick(timeComponents);
+            this.init();
         }, 1000);
     }
 }
